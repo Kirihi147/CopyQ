@@ -20,6 +20,7 @@ extern const QLatin1String mimeOwner;
 extern const QLatin1String mimeClipboardMode;
 extern const QLatin1String mimeCurrentTab;
 extern const QLatin1String mimeSelectedItems;
+extern const QLatin1String mimeSelectedItemsOrdered;
 extern const QLatin1String mimeCurrentItem;
 extern const QLatin1String mimeHidden;
 extern const QLatin1String mimeShortcut;

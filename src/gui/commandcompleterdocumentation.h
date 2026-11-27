@@ -104,6 +104,7 @@ void addDocumentation(AddDocumentationCallback addDocumentation)
     addDocumentation("selectItems", "selectItems(row, ...)", "Selects items in current tab.");
     addDocumentation("selectedTab", "selectedTab() -> string", "Returns tab that was selected when script was executed.");
     addDocumentation("selectedItems", "selectedItems() -> array of ints", "Returns selected rows in current tab.");
+    addDocumentation("selectedItemsOrdered", "selectedItemsOrdered() -> array of ints", "Returns selected rows in chronological selection order.");
     addDocumentation("selectedItemData", "selectedItemData(index) -> array of `Item`", "Returns data for given selected item.");
     addDocumentation("setSelectedItemData", "setSelectedItemData(index, Item) -> bool", "Set data for given selected item.");
     addDocumentation("selectedItemsData", "selectedItemsData() -> array of `Item`", "Returns data for all selected items.");

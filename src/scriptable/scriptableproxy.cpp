@@ -841,6 +841,7 @@ QVariantMap ScriptableProxy::getActionData(int id)
 
     auto data = m_actionData;
     data.remove(mimeSelectedItems);
+    data.remove(mimeSelectedItemsOrdered);
     data.remove(mimeCurrentItem);
     return data;
 }
@@ -1430,6 +1431,30 @@ QVector<int> ScriptableProxy::selectedItems(const QString &tabName)
 
     for (const auto &index : selected)
         selectedRows.append(index.row());
+
+    return selectedRows;
+}
+
+QVector<int> ScriptableProxy::selectedItemsOrdered(const QString &tabName)
+{
+    INVOKE(selectedItemsOrdered, (tabName));
+
+    ClipboardBrowser *c = fetchExistingBrowser(tabName);
+    if (c == nullptr)
+        return {};
+
+    QList<QPersistentModelIndex> selected;
+    if (c == selectedBrowser())
+        selected = getSelectionData<QList<QPersistentModelIndex>>(mimeSelectedItemsOrdered);
+    if (selected.isEmpty())
+        selected = c->orderedSelectedIndexes();
+
+    QVector<int> selectedRows;
+    selectedRows.reserve(selected.count());
+    for (const auto &index : selected) {
+        if (index.isValid())
+            selectedRows.append(index.row());
+    }
 
     return selectedRows;
 }

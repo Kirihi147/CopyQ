@@ -913,11 +913,63 @@ void ClipboardBrowser::selectionChanged(const QItemSelection &selected,
                                         const QItemSelection &deselected)
 {
     QListView::selectionChanged(selected, deselected);
+
+    const QModelIndexList deselectedList = deselected.indexes();
+    m_selectionOrder.erase(
+        std::remove_if(m_selectionOrder.begin(), m_selectionOrder.end(),
+            [&deselectedList](const QPersistentModelIndex &idx) {
+                return !idx.isValid() || deselectedList.contains(idx);
+            }),
+        m_selectionOrder.end());
+
+    QModelIndexList selectedList = selected.indexes();
+    if (!selectedList.isEmpty()) {
+        std::sort(selectedList.begin(), selectedList.end(),
+                  [](const QModelIndex &a, const QModelIndex &b) {
+                      return a.row() < b.row();
+                  });
+
+        const int currentRow = currentIndex().row();
+        const int firstRow = selectedList.first().row();
+        const int lastRow = selectedList.last().row();
+        const int anchorRow = m_selectionOrder.isEmpty() ? -1 : m_selectionOrder.last().row();
+
+        const bool reverseOrder = selectedList.size() > 1
+            && currentRow == firstRow
+            && anchorRow > lastRow;
+
+        if (reverseOrder) {
+            for (auto it = selectedList.crbegin(); it != selectedList.crend(); ++it) {
+                const QPersistentModelIndex persistent(*it);
+                if (!m_selectionOrder.contains(persistent))
+                    m_selectionOrder.append(persistent);
+            }
+        } else {
+            const QModelIndexList &constSelectedList = selectedList;
+            for (const QModelIndex &idx : constSelectedList) {
+                const QPersistentModelIndex persistent(idx);
+                if (!m_selectionOrder.contains(persistent))
+                    m_selectionOrder.append(persistent);
+            }
+        }
+    }
+
     for ( auto index : selected.indexes() )
         d.setItemWidgetSelected(index, true);
     for ( auto index : deselected.indexes() )
         d.setItemWidgetSelected(index, false);
     emit itemSelectionChanged(this);
+}
+
+QList<QPersistentModelIndex> ClipboardBrowser::orderedSelectedIndexes() const
+{
+    QList<QPersistentModelIndex> result;
+    result.reserve(m_selectionOrder.size());
+    for (const auto &index : m_selectionOrder) {
+        if (index.isValid() && selectionModel()->isSelected(index))
+            result.append(index);
+    }
+    return result;
 }
 
 void ClipboardBrowser::focusInEvent(QFocusEvent *event)

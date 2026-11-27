@@ -1648,6 +1648,12 @@ QJSValue Scriptable::selectedItems()
     return toScriptValue( m_proxy->selectedItems(m_tabName), m_engine );
 }
 
+QJSValue Scriptable::selectedItemsOrdered()
+{
+    m_skipArguments = 0;
+    return toScriptValue( m_proxy->selectedItemsOrdered(m_tabName), m_engine );
+}
+
 QJSValue Scriptable::currentItem()
 {
     m_skipArguments = 0;

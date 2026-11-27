@@ -270,6 +270,8 @@ public slots:
     QJSValue selectedtab() { return selectedTab(); }
     QJSValue selectedItems();
     QJSValue selecteditems() { return selectedItems(); }
+    QJSValue selectedItemsOrdered();
+    QJSValue selecteditemsordered() { return selectedItemsOrdered(); }
     QJSValue currentItem();
     QJSValue currentitem() { return currentItem(); }
     QJSValue index() { return currentItem(); }

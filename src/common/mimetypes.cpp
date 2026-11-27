@@ -17,6 +17,7 @@ const QLatin1String mimeOwner(COPYQ_MIME_PREFIX "owner");
 const QLatin1String mimeClipboardMode(COPYQ_MIME_PREFIX "clipboard-mode");
 const QLatin1String mimeCurrentTab(COPYQ_MIME_PREFIX "current-tab");
 const QLatin1String mimeSelectedItems(COPYQ_MIME_PREFIX "selected-items");
+const QLatin1String mimeSelectedItemsOrdered(COPYQ_MIME_PRIVATE_PREFIX "selected-items-ordered");
 const QLatin1String mimeCurrentItem(COPYQ_MIME_PREFIX "current-item");
 const QLatin1String mimeHidden(COPYQ_MIME_PREFIX "hidden");
 const QLatin1String mimeShortcut(COPYQ_MIME_PREFIX "shortcut");

@@ -194,6 +194,7 @@ public slots:
     bool selectItems(const QString &tabName, const QVector<int> &rows);
 
     QVector<int> selectedItems(const QString &tabName);
+    QVector<int> selectedItemsOrdered(const QString &tabName);
     QString selectedTab();
 
     QVariantMap selectedItemData(int selectedIndex, const QString &tabName);

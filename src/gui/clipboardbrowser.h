@@ -215,6 +215,9 @@ class ClipboardBrowser final : public QListView
 
         void emitItemCount();
 
+        /** Return selected indexes in chronological selection order. */
+        QList<QPersistentModelIndex> orderedSelectedIndexes() const;
+
         using QListView::isIndexHidden;
         using QListView::isRowHidden;
         using QListView::verticalOffset;
@@ -402,4 +405,5 @@ class ClipboardBrowser final : public QListView
         bool m_selectNewItems = false;
 
         int m_lastFilterId = 0;
+        QList<QPersistentModelIndex> m_selectionOrder;
 };

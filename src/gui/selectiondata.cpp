@@ -48,5 +48,9 @@ QVariantMap selectionData(const ClipboardBrowser &c)
 {
     const QModelIndexList selectedIndexes = c.selectionModel()->selectedIndexes();
     const auto current = c.selectionModel()->currentIndex();
-    return selectionData(c, current, selectedIndexes);
+    auto result = selectionData(c, current, selectedIndexes);
+    const auto ordered = c.orderedSelectedIndexes();
+    if (!ordered.isEmpty())
+        result.insert(mimeSelectedItemsOrdered, QVariant::fromValue(ordered));
+    return result;
 }
